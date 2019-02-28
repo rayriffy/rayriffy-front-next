@@ -178,6 +178,26 @@
         font-size: 16px;
       }
     }
+
+    @media only screen and (max-height: 450px) {
+      .main-navigation {
+        display: flex;
+        justify-content: flex-end;
+      }
+      .title-area-container {
+        margin-top: -35px;
+      }
+      .title-area {
+        width: 90%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .site-title {
+        display: flex;
+        justify-content: flex-start;
+      }
+    }
   </style>
 </head>
 <body>
@@ -202,10 +222,12 @@
             <img class="site-title-image" src="resources/P64UlbFd9LK9aeUT3S.png" alt="rayriffy" />
           </a>
         </h1>
-        <p class="site-tagline">Code + Music ≈ Life</p>
-        <p class="site-email">
-          <a href="mailto:contact@rayriffy.com">contact@rayriffy.com</a>
-        </p>
+        <div class="content-area">
+          <p class="site-tagline">Code + Music ≈ Life</p>
+          <p class="site-email">
+            <a href="mailto:contact@rayriffy.com">contact@rayriffy.com</a>
+          </p>
+        </div>
       </div>
     </div>
   </div>
