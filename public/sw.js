@@ -10,14 +10,15 @@ workbox.routing.registerRoute(/\.(?:html)$/,
   workbox.strategies.staleWhileRevalidate()
 );
 
-workbox.router.registerRoute('https://fonts.googleapis.com/(.*)',
+workbox.routing.registerRoute(
+  new RegExp('.*(?:googleapis|gstatic)\.com.*$'),
   workbox.strategies.cacheFirst({
     cacheName: 'googleapis-v' + version,
     cacheExpiration: {
       maxEntries: 30
     },
     cacheableResponse: {statuses: [0, 200]}
-  })
+  }),
 );
 
 workbox.router.registerRoute(/\.(?:png|gif|jpg|svg)$/,
@@ -29,12 +30,6 @@ workbox.router.registerRoute(/\.(?:png|gif|jpg|svg)$/,
 workbox.router.registerRoute(/\.(?:js|css)$/,
   workbox.strategies.staleWhileRevalidate({
     cacheName: 'static-resources-v' + version
-  })
-);
-
-workbox.router.registerRoute('index.html',
-  workbox.strategies.staleWhileRevalidate({
-    cacheName: 'homepage-resources-v' + version
   })
 );
 
