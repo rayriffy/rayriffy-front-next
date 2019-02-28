@@ -359,6 +359,11 @@
           for (b = 0 ; b < i.length ; b++) {
             if (i[b] !== s[c][b]) {
               i = [];
+              if (c !== 0) {
+                c = 0;
+                document.getElementById("tagline").textContent="Code + Music ≈ Life";
+                document.getElementById("email").textContent="contact@rayriffy.com";
+              }
               break;
             }
           }
