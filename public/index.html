@@ -328,36 +328,39 @@
           else document.getElementById("easter").style.display = "none";
         }
         i = [...i, e.keyCode];
-        if (s[c].every((v, k) => v === i[k])) {
-          switch (c) {
-            case 0:
-              document.getElementById("tagline").textContent="ちょっと、↑にためて下さい。";
-              document.getElementById("email").textContent="難易度：EASY";
-              break;
-            case 1:
-              document.getElementById("tagline").textContent="回転　一回転";
-              document.getElementById("email").textContent="難易度：NORMAL";
-              break;
-            case 2:
-              document.getElementById("tagline").textContent="回転　反転　一回転";
-              document.getElementById("email").textContent="難易度：NORMAL";
-              break;
-            case 3:
-              document.getElementById("tagline").textContent="回転　一回転";
-              document.getElementById("email").textContent="難易度：HARD";
-              break;
-            case 4:
-              document.getElementById("tagline").textContent="ちょっと？　間違えないで下さい。";
-              document.getElementById("email").textContent="難易度：HARD";
-              break;
-          }
-          i = [];
-          c++;
-        }
-        for (b = 0 ; b < i.length ; b++) {
-          if (i[b] !== s[c][b]) {
+        if (c <= 4) {
+          if (s[c].every((v, k) => v === i[k])) {
+            switch (c) {
+              case 0:
+                document.getElementById("tagline").textContent="ちょっと、↑にためて下さい。";
+                document.getElementById("email").textContent="難易度：EASY";
+                break;
+              case 1:
+                document.getElementById("tagline").textContent="回転　一回転";
+                document.getElementById("email").textContent="難易度：NORMAL";
+                break;
+              case 2:
+                document.getElementById("tagline").textContent="回転　反転　一回転";
+                document.getElementById("email").textContent="難易度：NORMAL";
+                break;
+              case 3:
+                document.getElementById("tagline").textContent="回転　一回転";
+                document.getElementById("email").textContent="難易度：HARD";
+                break;
+              case 4:
+                document.getElementById("tagline").textContent="ちょっと？　間違えないで下さい。";
+                document.getElementById("email").textContent="難易度：HARD";
+                c = 5;
+                break;
+            }
             i = [];
-            break;
+            c++;
+          }
+          for (b = 0 ; b < i.length ; b++) {
+            if (i[b] !== s[c][b]) {
+              i = [];
+              break;
+            }
           }
         }
       };
