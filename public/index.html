@@ -291,7 +291,7 @@
             />
           </h1>
           <div class="content-area">
-            <p class="site-tagline">Code + Music ≈ Life</p>
+            <p class="site-tagline" id="tagline">Code + Music ≈ Life</p>
             <p class="site-email">
               <a href="mailto:contact@rayriffy.com">contact@rayriffy.com</a>
             </p>
@@ -310,12 +310,25 @@
 
     <script async>
       var a = 0;
+      var b;
+      var i = [];
+      const s = [39, 40, 38, 39, 39, 40, 39, 39, 38, 38, 40, 40, 37, 39, 37, 39, 39, 40, 38, 39, 39, 40, 39, 39, 38, 38, 40, 40, 37, 39, 37, 39, 39, 40, 38, 39, 39, 40, 39, 39, 38, 38, 40, 40]
       document.body.onkeyup = function(e) {
         if (e.keyCode == 32) a++;
         if (a % 10 === 0 && a !== 0) {
           if (document.getElementById("easter").style.display === "none")
             document.getElementById("easter").style.display = "inline-block";
           else document.getElementById("easter").style.display = "none";
+        }
+        i = [...i, e.keyCode];
+        if (s.every((v, k) => v === i[k])) {
+          document.getElementById("tagline").textContent="ちょっと、↑にためて下さい。";
+        }
+        for (b = 0 ; b < i.length ; b++) {
+          if (i[b] !== s[b]) {
+            i = [];
+            break;
+          }
         }
       };
     </script>
