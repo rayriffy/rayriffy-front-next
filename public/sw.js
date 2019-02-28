@@ -6,6 +6,8 @@ var FILES = [
   '/',
   'index.html',
   'main.js',
+  'manifest.json',
+  'favicon.png',
   'https://fonts.googleapis.com/css?family=Roboto:300,400',
   'https://use.fontawesome.com/releases/v5.7.2/css/regular.css',
   'https://use.fontawesome.com/releases/v5.7.2/css/brands.css',
