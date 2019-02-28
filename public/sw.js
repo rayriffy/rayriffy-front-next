@@ -1,5 +1,9 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.1/workbox-sw.js');
 
+workbox.setConfig({
+  debug: false
+})
+
 workbox.routing.registerRoute(/\.(?:html)$/,
   workbox.strategies.staleWhileRevalidate()
 );
@@ -20,4 +24,8 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(cacheName).then(cache => cache.addAll(urls))
   );
+});
+
+workbox.routing.setCatchHandler(({ url, event, params }) => {
+  return caches.match('index.html')
 });
