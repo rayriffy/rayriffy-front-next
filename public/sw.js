@@ -21,13 +21,13 @@ workbox.routing.registerRoute(
   }),
 );
 
-workbox.router.registerRoute(/\.(?:png|gif|jpg|svg)$/,
+workbox.routing.registerRoute('/resources/(.*)',
   workbox.strategies.cacheFirst({
     cacheName: 'images-cache-v' + version
   })
 );
 
-workbox.router.registerRoute(/\.(?:js|css)$/,
+workbox.routing.registerRoute('/\.(?:js|css)$/',
   workbox.strategies.staleWhileRevalidate({
     cacheName: 'static-resources-v' + version
   })
