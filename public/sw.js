@@ -26,6 +26,6 @@ self.addEventListener('install', event => {
   );
 });
 
-workbox.routing.setCatchHandler(({ url, event, params }) => {
+workbox.routing.setCatchHandler(() => {
   return caches.match('index.html')
 });
