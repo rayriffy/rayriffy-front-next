@@ -42,6 +42,18 @@
       href="https://fonts.googleapis.com/css?family=Roboto"
       rel="stylesheet"
     />
+    <link
+      href="https://use.fontawesome.com/releases/v5.7.2/css/regular.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://use.fontawesome.com/releases/v5.7.2/css/brands.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://use.fontawesome.com/releases/v5.7.2/css/fontawesome.css"
+      rel="stylesheet"
+    />
     <style>
       html,
       body {
@@ -110,6 +122,26 @@
       }
       .main-navigation li a:hover {
         color: #e6e6e6;
+      }
+      .social-navigation {
+        position: relative;
+        top: auto;
+        bottom: 19px;
+        width: 90%;
+        margin: 0 auto;
+        box-sizing: border-box;
+        display: block;
+        padding: 0 0 20px;
+        text-align: center;
+      }
+      .social-navigation li {
+        display: inline-block;
+        margin: 0 12px;
+      }
+      .social-navigation li a {
+        color: rgba(140, 140, 140, 0.9);
+        text-decoration: none;
+        font-size: 24px;
       }
       .title-area-container {
         height: 100%;
@@ -184,6 +216,9 @@
         .main-navigation li a {
           font-size: 16px;
         }
+        .social-navigation li a {
+          font-size: 18px;
+        }
       }
       @media only screen and (max-height: 450px) {
         .site-title-image {
@@ -205,9 +240,13 @@
             max-width: 80%;
           }
         }
-        .main-navigation {
+        .main-navigation, .social-navigation {
           display: flex;
           justify-content: flex-end;
+        }
+        .social-navigation {
+          padding: 0;
+          margin-top: -24px;
         }
         .title-area-container {
           margin-top: -35px;
@@ -257,6 +296,14 @@
           </div>
         </div>
       </div>
+
+      <ul class="social-navigation">
+        <li><a href="mailto:contact@rayriffy.com"><i class="far fa-envelope"></i></a></li>
+        <li><a href="https://twitter.com/rayriffy"><i class="fab fa-twitter"></i></a></li>
+        <li><a href="https://instagram.com/r4yr1ffy"><i class="fab fa-instagram"></i></a></li>
+        <li><a href="https://facebook.com/rayriffy"><i class="fab fa-facebook"></i></a></i></li>
+        <li><a href="https://github.com/rayriffy"><i class="fab fa-github"></i></a></i></li>
+      </ul>
     </div>
 
     <script async>
