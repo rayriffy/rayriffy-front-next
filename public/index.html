@@ -86,6 +86,10 @@
         min-width: 100%;
         width: 100%;
         min-height: 100%;
+        -webkit-transition: 150ms;
+        transition: 150ms;
+        -webkit-perspective: 800px;
+        perspective: 800px;
       }
       .bgOverlay {
         background-color: rgba(0, 0, 0, 0.5);
@@ -158,15 +162,46 @@
         z-index: 0;
         margin-top: -65px;
       }
+      .title-area-container.transition {
+        -webkit-transition: 250ms;
+        transition: 250ms;
+        -webkit-transition-delay: 0ms;
+        transition-delay: 0ms;
+      }
       .title-area {
         background-color: transparent;
         width: 41%;
         text-align: center;
+        -webkit-transition: 150ms;
+        transition: 150ms;
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+      }
+      .title-area.keydown._38 {
+        -webkit-transform: rotateX(10deg);
+        transform: rotateX(10deg);
+      }
+      .title-area.keydown._40 {
+        -webkit-transform: rotateX(-10deg);
+        transform: rotateX(-10deg);
+      }
+      .title-area.keydown._37 {
+        -webkit-transform: rotateY(-10deg);
+        transform: rotateY(-10deg);
+      }
+      .title-area.keydown._39 {
+        -webkit-transform: rotateY(10deg);
+        transform: rotateY(10deg);
+      }
+      .title-area.keydown {
+        -webkit-transform: translateZ(-50px);
+        transform: translateZ(-50px);
       }
       .site-title-image {
         opacity: 1;
         max-width: 35%;
-        transition: opacity 0.2s ease;
         border: 0;
       }
       .site-tagline {
@@ -402,7 +437,18 @@
             break;
           }
         }
+        if (e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 39 || e.keyCode == 40)
+          document.querySelector('.title-area').classList.remove('keydown', '_' + e.keyCode)
       };
+      document.body.onkeydown = function(e) {
+        if (e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 39 || e.keyCode == 40) {
+          document.querySelector('.title-area-container').classList.add('transition')
+          document.querySelector('.title-area').classList.add('keydown', '_' + e.keyCode)
+        }
+      };
+      document.body.onfocus = function(e) {
+        document.querySelector('.title-area').classList.remove('keydown')
+      }
     </script>
     <script>
       if ('serviceWorker' in navigator) {

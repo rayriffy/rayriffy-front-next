@@ -1,6 +1,6 @@
 var EXTRA_FILES = [];
 
-var CHECKSUM = "v2";
+var CHECKSUM = "v3";
 
 var FILES = [
   '/',
