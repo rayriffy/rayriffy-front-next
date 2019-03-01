@@ -1,19 +1,18 @@
 var EXTRA_FILES = [];
 
-var CHECKSUM = "v1";
+var CHECKSUM = "v2";
 
 var FILES = [
   '/',
   'index.html',
-  'main.js',
   'manifest.json',
   'favicon.png',
   'https://fonts.googleapis.com/css?family=Roboto:300,400',
   'https://use.fontawesome.com/releases/v5.7.2/css/regular.css',
   'https://use.fontawesome.com/releases/v5.7.2/css/brands.css',
   'https://use.fontawesome.com/releases/v5.7.2/css/fontawesome.css',
+  'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css',
   'resources/NfJeVlcPAu0b7L3es4.jpg',
-  'resources/P64UlbFd9LK9aeUT3S.png',
 ].concat(EXTRA_FILES || []);
 
 var CACHENAME = 'rayriffy-front-' + CHECKSUM;
