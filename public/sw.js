@@ -1,6 +1,6 @@
 var EXTRA_FILES = [];
 
-var CHECKSUM = "v2019.03.02-2";
+var CHECKSUM = "v2019.03.02-3";
 
 var FILES = [
   '/',
