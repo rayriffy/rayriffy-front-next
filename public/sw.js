@@ -1,6 +1,6 @@
 var EXTRA_FILES = [];
 
-var CHECKSUM = "v2019.03.02-1";
+var CHECKSUM = "v2019.03.02-2";
 
 var FILES = [
   '/',
@@ -13,6 +13,8 @@ var FILES = [
   'https://use.fontawesome.com/releases/v5.7.2/css/fontawesome.css',
   'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css',
   'resources/NfJeVlcPAu0b7L3es4.jpg',
+  'resources/pOxOyHESM2YTPOrpiP.js',
+  'resources/IaRMTeYINxFwPlzAZZ.css',
 ].concat(EXTRA_FILES || []);
 
 var CACHENAME = 'rayriffy-front-' + CHECKSUM;
