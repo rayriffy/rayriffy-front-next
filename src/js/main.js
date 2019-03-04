@@ -8,7 +8,6 @@ function m(e, a) {
   n.addEventListener("animationend", h);
 }
 var a = 0;
-var b = 0;
 var c = 0;
 var d = 0;
 var i = [];
@@ -77,7 +76,6 @@ document.body.onkeyup = function(e) {
         document.getElementById("tagline").textContent =
           "ちょっと？　間違えないで下さい。";
         document.getElementById("email").textContent = "難易度：HARD";
-        b++;
         break;
     }
     i = [];
@@ -86,7 +84,7 @@ document.body.onkeyup = function(e) {
   for (var j = 0; j < i.length; j++) {
     if (i[j] !== s[c][j]) {
       i = [];
-      if (c !== 0 || b !== 0) {
+      if (c !== 0) {
         c = 0;
         m(".site-title-image", "shake");
         document.getElementById("tagline").textContent = "Code + Music ≈ Life";
