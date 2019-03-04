@@ -98,6 +98,10 @@ document.body.onkeyup = function(e) {
   if (t.every((v, k) => v === l[k])) {
     document.querySelector(".rick").play();
     document.querySelector(".wrapper").style.backgroundImage = "url(\"resources/WV7pVas9gCXpkP88SU.jpg\")";
+    document.querySelector(".rick").addEventListener("ended", function(){
+      document.querySelector(".rick").currentTime = 0;
+      document.querySelector(".wrapper").style.backgroundImage = "url(\"resources/NfJeVlcPAu0b7L3es4.jpg\")";
+    });
   }
   for (var j = 0; j < l.length; j++) {
     if (l[j] !== t[j]) {
