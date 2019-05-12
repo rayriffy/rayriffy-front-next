@@ -1,13 +1,13 @@
 var EXTRA_FILES = [];
 
-var CHECKSUM = "v2019.03.04-4";
+var CHECKSUM = "v2019.05.12-1";
 
 var FILES = [
   '/',
   'index.html',
   'manifest.json',
   'favicon.png',
-  'https://fonts.googleapis.com/css?family=Roboto:300,400',
+  'https://fonts.googleapis.com/css?family=Roboto:300,400&font-display=swap',
   'https://use.fontawesome.com/releases/v5.7.2/css/regular.css',
   'https://use.fontawesome.com/releases/v5.7.2/css/brands.css',
   'https://use.fontawesome.com/releases/v5.7.2/css/fontawesome.css',
