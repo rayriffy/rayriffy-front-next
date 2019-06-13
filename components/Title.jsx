@@ -1,6 +1,8 @@
 import _ from 'lodash'
 import React, {useState, useEffect} from 'react'
 
+import Gamepad from 'react-gamepad'
+
 import styled from 'styled-components'
 import {Box, Flex} from 'rebass'
 
@@ -18,15 +20,15 @@ const Container = styled(Box)`
   transform-style: preserve-3d;
   backface-visibility: hidden;
   ${props =>
-    props.direction.includes(37)
+    props.direction.includes('ArrowLeft')
       ? `transform: rotateY(-10deg);`
-      : props.direction.includes(38)
+      : props.direction.includes('ArrowUp')
       ? `transform: rotateX(10deg);`
-      : props.direction.includes(39)
+      : props.direction.includes('ArrowRight')
       ? `transform: rotateY(10deg);`
-      : props.direction.includes(40)
+      : props.direction.includes('ArrowDown')
       ? `transform: rotateX(-10deg);`
-      : _.intersection(props.direction, [37, 38, 39, 40]).length < props.direction
+      : _.intersection(props.direction, ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown']).length < props.direction.length
       ? `transform: translateZ(-50px);`
       : null}
 `
@@ -41,14 +43,42 @@ const Title = () => {
   // Init state
   const [key, setKey] = useState([])
 
+  const gamepadUpHandler = e => {
+    if (e === 'DPadUp') {
+      setKey(prev => _.filter(prev, o => o !== 'ArrowUp'))
+    } else if (e === 'DPadDown') {
+      setKey(prev => _.filter(prev, o => o !== 'ArrowDown'))
+    } else if (e === 'DPadLeft') {
+      setKey(prev => _.filter(prev, o => o !== 'ArrowLeft'))
+    } else if (e === 'DPadRight') {
+      setKey(prev => _.filter(prev, o => o !== 'ArrowRight'))
+    } else {
+      setKey(prev => _.filter(prev, o => o !== e))
+    }
+  }
+
+  const gamepadDownHandler = e => {
+    if (e === 'DPadUp') {
+      setKey(prev => _.union(prev, ['ArrowUp']))
+    } else if (e === 'DPadDown') {
+      setKey(prev => _.union(prev, ['ArrowDown']))
+    } else if (e === 'DPadLeft') {
+      setKey(prev => _.union(prev, ['ArrowLeft']))
+    } else if (e === 'DPadRight') {
+      setKey(prev => _.union(prev, ['ArrowRight']))
+    } else {
+      setKey(prev => _.union(prev, [e]))
+    }
+  }
+
   const keyDownHandler = e => {
     // CSS Animation handler
-    setKey(prev => _.union(prev, [e.keyCode]))
+    setKey(prev => _.union(prev, [e.code]))
   }
 
   const keyUpHandler = e => {
     // CSS Animation handler
-    setKey(prev => _.filter(prev, o => o !== e.keyCode))
+    setKey(prev => _.filter(prev, o => o !== e.code))
   }
 
   useEffect(() => {
@@ -62,6 +92,9 @@ const Title = () => {
 
   return (
     <Cover justifyContent="center" alignItems="center">
+      <Gamepad onButtonDown={gamepadDownHandler} onButtonUp={gamepadUpHandler}>
+        <></>
+      </Gamepad>
       <Container direction={key} width={[1, 2 / 3, 3 / 5, 3 / 7]}>
         <Logo className="site-title-image" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 370.1 512">
           <path
