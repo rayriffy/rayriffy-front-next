@@ -1,4 +1,7 @@
 import React, {useState, useEffect} from 'react'
+import ls from 'local-storage'
+
+import Gamepad from 'react-gamepad'
 
 import styled from 'styled-components'
 import {Text, Link} from 'rebass'
@@ -39,28 +42,19 @@ const Content = props => {
   const [title, setTitle] = useState('code + music ≈ life')
   const [subtitle, setSubtitle] = useState('contact@rayriffy.com')
 
-  let happyPhase = 0
-  let mointHappyKey = []
-
-  const keyUpHandler = e => {
-    // Count space and collecting keys
-    if (e.code !== 'Space') {
-      mointHappyKey = [...mointHappyKey, e.code]
-    }
-
-    //
-    // Hapiness the game
-    //
+  const happyHandler = e => {
+    // Collecting keys
+    ls('happyKey', [...ls('happyKey'), e])
 
     /* For resetting the game */
-    if (happyPhase === eventSequence.length) {
-      happyPhase = 0
-      mointHappyKey = [e.code]
+    if (ls('happyPhase') === eventSequence.length) {
+      ls('happyPhase', 0)
+      ls('happyKey', [e])
     }
 
     /* Verify and pointer increment */
-    if (eventSequence[happyPhase].every((key, i) => key === mointHappyKey[i])) {
-      switch (happyPhase) {
+    if (eventSequence[ls('happyPhase')].every((key, i) => key === ls('happyKey')[i])) {
+      switch (ls('happyPhase')) {
         case 0:
           setTitle('ちょっと、↑にためて下さい。')
           setSubtitle('難易度：EASY')
@@ -98,17 +92,17 @@ const Content = props => {
           setSubtitle('END')
           break
       }
-      mointHappyKey = []
-      happyPhase++
+      ls('happyKey', [])
+      ls('happyPhase', ls('happyPhase') + 1)
     }
 
     /* Detect wrong sequence */
-    mointHappyKey.some((key, i) => {
-      if (key !== eventSequence[happyPhase][i]) {
-        mointHappyKey = []
+    ls('happyKey').some((key, i) => {
+      if (key !== eventSequence[ls('happyPhase')][i]) {
+        ls('happyKey', [])
 
-        if (happyPhase !== 0) {
-          happyPhase = 0
+        if (ls('happyPhase') !== 0) {
+          ls('happyPhase', 0)
           setTitle('code + music ≈ life')
           setSubtitle('contact@rayriffy.com')
           // TODO: Set shake animation
@@ -120,7 +114,37 @@ const Content = props => {
     })
   }
 
+  const gamepadUpHandler = e => {
+    if (e === 'DPadUp') {
+      happyHandler('ArrowUp')
+    } else if (e === 'DPadDown') {
+      happyHandler('ArrowDown')
+    } else if (e === 'DPadLeft') {
+      happyHandler('ArrowLeft')
+    } else if (e === 'DPadRight') {
+      happyHandler('ArrowRight')
+    } else if (e === 'A' || e === 'B' || e === 'X' || e === 'Y') {
+      happyHandler(`Key${e}`)
+    } else if (e === 'LB' || e === 'LT') {
+      happyHandler('KeyL')
+    } else if (e === 'RB' || e === 'RT') {
+      happyHandler('KeyR')
+    } else if (e === 'Back') {
+      happyHandler('ShiftLeft')
+    } else if (e === 'Start') {
+      happyHandler('ShiftRight')
+    } else if (e !== null) {
+      happyHandler(e)
+    }
+  }
+
+  const keyUpHandler = e => {
+    happyHandler(e.code)
+  }
+
   useEffect(() => {
+    ls('happyKey', [])
+    ls('happyPhase', 0)
     window.addEventListener('keyup', keyUpHandler)
     return () => {
       window.removeEventListener('keyup', keyUpHandler)
@@ -129,6 +153,9 @@ const Content = props => {
 
   return (
     <Container>
+      <Gamepad onButtonUp={gamepadUpHandler}>
+        <></>
+      </Gamepad>
       <Title fontSize={24} fontWeight={300} my={3}>
         {title}
       </Title>
