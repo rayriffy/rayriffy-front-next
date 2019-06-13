@@ -8,8 +8,10 @@
   "private": true,
   "scripts": {
     "build": "next build",
+    "deploy": "yarn build && yarn export",
     "dev": "next",
-    "lint": "eslint ./**/*.js",
+    "export": "next export",
+    "lint": "eslint '**/*.{js,jsx}'",
     "start": "next start"
   },
   "dependencies": {
