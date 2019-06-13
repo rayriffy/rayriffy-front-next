@@ -1,3 +1,4 @@
+/* Sequences are extracted from 幸せになれる隠しコマンドがあるらしい (https://youtu.be/lwT4h6x3UM0) */
 const happySequence = [
   [
     'ArrowRight',
