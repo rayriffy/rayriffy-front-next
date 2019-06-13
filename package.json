@@ -1,0 +1,52 @@
+{
+  "name": "rayriffy-front-next",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/rayriffy/rayriffy-front-next",
+  "author": "Phumrapee Limpianchop <contact@rayriffy.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "deploy": "yarn build && yarn export",
+    "dev": "next",
+    "export": "next export",
+    "format": "yarn run lint --fix",
+    "lint": "eslint '**/*.{js,jsx}'",
+    "start": "next start"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn format && yarn lint",
+      "pre-push": "yarn lint && yarn build"
+    }
+  },
+  "dependencies": {
+    "babel-plugin-styled-components": "^1.10.0",
+    "husky": "^2.4.1",
+    "lodash": "^4.17.11",
+    "next": "^8.1.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-helmet": "^5.2.1",
+    "react-sound": "^1.2.0",
+    "react-typography": "^0.16.19",
+    "rebass": "^3.1.1",
+    "styled-components": "^4.2.1",
+    "typography": "^0.16.19"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-react": "^7.13.0",
+    "eslint-plugin-standard": "^4.0.0",
+    "prettier": "^1.17.1"
+  }
+}
