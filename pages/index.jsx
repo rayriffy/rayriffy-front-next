@@ -1,9 +1,13 @@
 import React, {useState, useEffect} from 'react'
+import ls from 'local-storage'
 
-import styled from 'styled-components'
+import Gamepad from 'react-gamepad'
 import Sound from 'react-sound'
 
+import styled from 'styled-components'
 import {Card} from 'rebass'
+
+import eventSequence from '../data/sequence/rick'
 
 import App from '../components/App'
 import Navbar from '../components/Navbar'
@@ -23,29 +27,24 @@ const Page = styled(Card)`
 const Index = props => {
   // Init state
   let [isRicked, setIsRicked] = useState('STOPPED')
-  let mointRickKey = []
 
-  const eventRick = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]
-
-  const keyUpHandler = e => {
+  const rickHandler = e => {
     // Count space and collecting keys
-    if (e.keyCode !== 32) {
-      mointRickKey = [...mointRickKey, e.keyCode]
-    }
+    ls('rickKey', [...ls('rickKey'), e])
 
     //
     // Ricked roll the game
     //
 
     /* Ricked everyone */
-    if (eventRick.every((key, i) => key === mointRickKey[i])) {
+    if (eventSequence.every((key, i) => key === ls('rickKey')[i])) {
       setIsRicked('PLAYING')
     }
 
     /* Detect wrong sequence */
-    mointRickKey.some((key, i) => {
-      if (key !== eventRick[i]) {
-        mointRickKey = []
+    ls('rickKey').some((key, i) => {
+      if (key !== eventSequence[i]) {
+        ls('rickKey', [])
         return true
       } else {
         return false
@@ -53,7 +52,36 @@ const Index = props => {
     })
   }
 
+  const gamepadUpHandler = e => {
+    if (e === 'DPadUp') {
+      rickHandler('ArrowUp')
+    } else if (e === 'DPadDown') {
+      rickHandler('ArrowDown')
+    } else if (e === 'DPadLeft') {
+      rickHandler('ArrowLeft')
+    } else if (e === 'DPadRight') {
+      rickHandler('ArrowRight')
+    } else if (e === 'A' || e === 'B' || e === 'X' || e === 'Y') {
+      rickHandler(`Key${e}`)
+    } else if (e === 'LB' || e === 'LT') {
+      rickHandler('KeyL')
+    } else if (e === 'RB' || e === 'RT') {
+      rickHandler('KeyR')
+    } else if (e === 'Back') {
+      rickHandler('ShiftLeft')
+    } else if (e === 'Start') {
+      rickHandler('ShiftRight')
+    } else if (e !== null) {
+      rickHandler(e)
+    }
+  }
+
+  const keyUpHandler = e => {
+    rickHandler(e.code)
+  }
+
   useEffect(() => {
+    ls('rickKey', [])
     window.addEventListener('keyup', keyUpHandler)
     return () => {
       window.removeEventListener('keyup', keyUpHandler)
@@ -69,6 +97,9 @@ const Index = props => {
           setIsRicked('STOPPED')
         }}
       />
+      <Gamepad onButtonUp={gamepadUpHandler}>
+        <></>
+      </Gamepad>
       <Cover backgroundSize="cover" backgroundPosition="center" ricked={isRicked === 'PLAYING'}>
         <Page color="white" bg="rgba(0,0,0,0.5)">
           <Navbar />
