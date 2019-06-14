@@ -169,7 +169,7 @@ const happySequence = [
     'ArrowDown',
   ],
   ['ArrowRight', 'KeyB', 'ArrowDown', 'KeyA', 'KeyY', 'ArrowUp', 'KeyL', 'ArrowRight'],
-  ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyY', 'KeyL'],
+  ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'KeyY', 'KeyL'],
   ['ShiftLeft', 'ShiftRight', 'KeyA', 'KeyB', 'KeyY', 'KeyL', 'KeyR', 'KeyX', 'ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown'],
   [
     'ArrowRight',
