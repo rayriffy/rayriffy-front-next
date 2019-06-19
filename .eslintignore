@@ -1,3 +1,5 @@
 old/*
 node_modules/*
 pages/_document.jsx
+out/*
+.next/*
