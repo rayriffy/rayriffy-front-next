@@ -8,7 +8,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "deploy": "yarn build && yarn export && mv ./out/static/ads.txt ./out",
+    "deploy": "netlify deploy --dir=./out --prod",
     "dev": "next",
     "export": "next export",
     "format": "yarn run lint --fix",
@@ -26,7 +26,8 @@
     "husky": "^2.4.1",
     "local-storage": "^2.0.0",
     "lodash": "^4.17.11",
-    "next": "^8.1.0",
+    "netlify-cli": "^2.24.0",
+    "next": "^9.1.5",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
