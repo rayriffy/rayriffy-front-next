@@ -1,5 +1,19 @@
+type ISequence =
+  | 'ArrowUp'
+  | 'ArrowDown'
+  | 'ArrowLeft'
+  | 'ArrowRight'
+  | 'KeyB'
+  | 'KeyA'
+  | 'KeyX'
+  | 'KeyY'
+  | 'KeyL'
+  | 'KeyR'
+  | 'ShiftLeft'
+  | 'ShiftRight'
+
 /* Sequences are extracted from 幸せになれる隠しコマンドがあるらしい (https://youtu.be/lwT4h6x3UM0) */
-const happySequence = [
+const happySequence: ISequence[][] = [
   [
     'ArrowRight',
     'ArrowDown',
@@ -168,9 +182,40 @@ const happySequence = [
     'ArrowDown',
     'ArrowDown',
   ],
-  ['ArrowRight', 'KeyB', 'ArrowDown', 'KeyA', 'KeyY', 'ArrowUp', 'KeyL', 'ArrowRight'],
-  ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'KeyY', 'KeyL'],
-  ['ShiftLeft', 'ShiftRight', 'KeyA', 'KeyB', 'KeyY', 'KeyL', 'KeyR', 'KeyX', 'ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown'],
+  [
+    'ArrowRight',
+    'KeyB',
+    'ArrowDown',
+    'KeyA',
+    'KeyY',
+    'ArrowUp',
+    'KeyL',
+    'ArrowRight',
+  ],
+  [
+    'ArrowUp',
+    'ArrowUp',
+    'ArrowDown',
+    'ArrowDown',
+    'ArrowLeft',
+    'ArrowRight',
+    'KeyY',
+    'KeyL',
+  ],
+  [
+    'ShiftLeft',
+    'ShiftRight',
+    'KeyA',
+    'KeyB',
+    'KeyY',
+    'KeyL',
+    'KeyR',
+    'KeyX',
+    'ArrowRight',
+    'ArrowLeft',
+    'ArrowUp',
+    'ArrowDown',
+  ],
   [
     'ArrowRight',
     'ArrowDown',

@@ -1,50 +1,65 @@
-import React, {useState, useEffect} from 'react'
-import ls from 'local-storage'
+import React, { useEffect, useState } from 'react'
 
-import Gamepad from 'react-gamepad'
+import { get as lsGet, set as lsSet } from 'local-storage'
+import Gamepad, { Button } from 'react-gamepad'
 import Sound from 'react-sound'
 
-import styled from 'styled-components'
-import {Card} from 'rebass'
+import styled from '@emotion/styled'
+import { Card } from 'rebass'
 
 import eventSequence from '../data/sequence/rick'
 
-import App from '../components/App'
-import Navbar from '../components/Navbar'
-import Title from '../components/Title'
+import App from '../components/app'
+import Navbar from '../components/navbar'
+import Title from '../components/title'
 
-const Cover = styled(Card)`
+interface ICover {
+  ricked: boolean
+}
+
+const Cover = styled(Card)<ICover>`
+  background-size: cover;
+  background-position: center;
+
   height: 100%;
   perspective: 800px;
   transition: 150ms;
-  ${props => (props.ricked === true ? `background-image: url('/static/rick.jpg');` : `background-image: url('/static/main.jpg');`)}
+  ${(props: ICover) =>
+    props.ricked === true
+      ? `background-image: url('/static/rick.jpg');`
+      : `background-image: url('/static/main.jpg');`}
 `
 
 const Page = styled(Card)`
   height: 100%;
 `
 
-const Index = props => {
+const IndexPage: React.FC = props => {
   // Init state
-  let [isRicked, setIsRicked] = useState('STOPPED')
+  const [isRicked, setIsRicked] = useState<'PLAYING' | 'STOPPED' | 'PAUSED'>(
+    'STOPPED'
+  )
 
-  const rickHandler = e => {
+  const rickHandler = (e: string) => {
     // Count space and collecting keys
-    ls('rickKey', [...ls('rickKey'), e])
+    lsSet('rickKey', [...lsGet<string[]>('rickKey'), e])
 
     //
     // Ricked roll the game
     //
 
     /* Ricked everyone */
-    if (eventSequence.every((key, i) => key === ls('rickKey')[i])) {
+    if (
+      eventSequence.every((key, i) => key === lsGet<string[]>('rickKey')[i])
+    ) {
       setIsRicked('PLAYING')
     }
 
     /* Detect wrong sequence */
-    ls('rickKey').some((key, i) => {
+    lsGet<string[]>('rickKey').some((key, i) => {
       if (key !== eventSequence[i]) {
-        ls('rickKey', [])
+        lsSet<string[]>('rickKey', [])
+
         return true
       } else {
         return false
@@ -52,7 +67,7 @@ const Index = props => {
     })
   }
 
-  const gamepadUpHandler = e => {
+  const gamepadUpHandler = (e: Button) => {
     if (e === 'DPadUp') {
       rickHandler('ArrowUp')
     } else if (e === 'DPadDown') {
@@ -76,13 +91,14 @@ const Index = props => {
     }
   }
 
-  const keyUpHandler = e => {
+  const keyUpHandler = (e: KeyboardEvent) => {
     rickHandler(e.code)
   }
 
   useEffect(() => {
-    ls('rickKey', [])
+    lsSet<string[]>('rickKey', [])
     window.addEventListener('keyup', keyUpHandler)
+
     return () => {
       window.removeEventListener('keyup', keyUpHandler)
     }
@@ -91,17 +107,17 @@ const Index = props => {
   return (
     <App>
       <Sound
-        url="/static/rick.mp3"
+        url='/static/rick.mp3'
         playStatus={isRicked}
         onFinishedPlaying={() => {
           setIsRicked('STOPPED')
         }}
       />
       <Gamepad onButtonUp={gamepadUpHandler}>
-        <></>
+        <React.Fragment />
       </Gamepad>
-      <Cover backgroundSize="cover" backgroundPosition="center" ricked={isRicked === 'PLAYING'}>
-        <Page color="white" bg="rgba(0,0,0,0.5)">
+      <Cover ricked={isRicked === 'PLAYING'}>
+        <Page color='white' bg='rgba(0,0,0,0.5)'>
           <Navbar />
           <Title />
         </Page>
@@ -110,6 +126,4 @@ const Index = props => {
   )
 }
 
-export default Index
-
-Index.propTypes = {}
+export default IndexPage

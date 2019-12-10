@@ -31,9 +31,12 @@ jobs:
       - name: 'Init: Install dependencies'
         run: |
           yarn install
+      - name: 'Test: Type checking'
+        run: |
+          yarn test:types
       - name: 'Test: Code linting'
         run: |
-          yarn lint
+          yarn test:lint
   deploy:
     needs: test
     runs-on: macOS-latest

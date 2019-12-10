@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react'
-import ls from 'local-storage'
+import React, { useEffect, useState } from 'react'
 
-import Gamepad from 'react-gamepad'
+import { get as lsGet, set as lsSet } from 'local-storage'
+import Gamepad, { Button } from 'react-gamepad'
 
-import styled from 'styled-components'
-import {Text, Link} from 'rebass'
+import styled from '@emotion/styled'
+import { Link, Text } from 'rebass'
 
 import eventSequence from '../data/sequence/happy'
 
@@ -37,24 +37,28 @@ const Subtitle = styled(Link)`
   }
 `
 
-const Content = props => {
+const Content: React.FC = props => {
   // Init state
   const [title, setTitle] = useState('code + music ≈ life')
   const [subtitle, setSubtitle] = useState('contact@rayriffy.com')
 
-  const happyHandler = e => {
+  const happyHandler = (e: string) => {
     // Collecting keys
-    ls('happyKey', [...ls('happyKey'), e])
+    lsSet<string[]>('happyKey', [...lsGet<string[]>('happyKey'), e])
 
     /* For resetting the game */
-    if (ls('happyPhase') === eventSequence.length) {
-      ls('happyPhase', 0)
-      ls('happyKey', [e])
+    if (lsGet<number>('happyPhase') === eventSequence.length) {
+      lsSet<number>('happyPhase', 0)
+      lsSet<string[]>('happyKey', [e])
     }
 
     /* Verify and pointer increment */
-    if (eventSequence[ls('happyPhase')].every((key, i) => key === ls('happyKey')[i])) {
-      switch (ls('happyPhase')) {
+    if (
+      eventSequence[lsGet<number>('happyPhase')].every(
+        (key, i) => key === lsGet<string[]>('happyKey')[i]
+      )
+    ) {
+      switch (lsGet<number>('happyPhase')) {
         case 0:
           setTitle('ちょっと、↑にためて下さい。')
           setSubtitle('難易度：EASY')
@@ -73,7 +77,9 @@ const Content = props => {
           break
         case 4:
           setTitle('ちょっと？　間違えないで下さい。')
-          setSubtitle('難易度：HARD<br />Left-shift: SELECT<br />Right-shift: START')
+          setSubtitle(
+            '難易度：HARD<br />Left-shift: SELECT<br />Right-shift: START'
+          )
           break
         case 5:
           setTitle('友人　同僚　彼氏　彼女')
@@ -92,21 +98,22 @@ const Content = props => {
           setSubtitle('END')
           break
       }
-      ls('happyKey', [])
-      ls('happyPhase', ls('happyPhase') + 1)
+      lsSet<string[]>('happyKey', [])
+      lsSet<number>('happyPhase', lsGet<number>('happyPhase') + 1)
     }
 
     /* Detect wrong sequence */
-    ls('happyKey').some((key, i) => {
-      if (key !== eventSequence[ls('happyPhase')][i]) {
-        ls('happyKey', [])
+    lsGet<string[]>('happyKey').some((key, i) => {
+      if (key !== eventSequence[lsGet<number>('happyPhase')][i]) {
+        lsSet<string[]>('happyKey', [])
 
-        if (ls('happyPhase') !== 0) {
-          ls('happyPhase', 0)
+        if (lsGet<number>('happyPhase') !== 0) {
+          lsSet<number>('happyPhase', 0)
           setTitle('code + music ≈ life')
           setSubtitle('contact@rayriffy.com')
           // TODO: Set shake animation
         }
+
         return true
       } else {
         return false
@@ -114,7 +121,7 @@ const Content = props => {
     })
   }
 
-  const gamepadUpHandler = e => {
+  const gamepadUpHandler = (e: Button) => {
     if (e === 'DPadUp') {
       happyHandler('ArrowUp')
     } else if (e === 'DPadDown') {
@@ -138,14 +145,15 @@ const Content = props => {
     }
   }
 
-  const keyUpHandler = e => {
+  const keyUpHandler = (e: KeyboardEvent) => {
     happyHandler(e.code)
   }
 
   useEffect(() => {
-    ls('happyKey', [])
-    ls('happyPhase', 0)
+    lsSet<string[]>('happyKey', [])
+    lsSet<number>('happyPhase', 0)
     window.addEventListener('keyup', keyUpHandler)
+
     return () => {
       window.removeEventListener('keyup', keyUpHandler)
     }
@@ -154,12 +162,15 @@ const Content = props => {
   return (
     <Container>
       <Gamepad onButtonUp={gamepadUpHandler}>
-        <></>
+        <React.Fragment />
       </Gamepad>
       <Title fontSize={24} fontWeight={300} my={3}>
         {title}
       </Title>
-      <Subtitle href="mailto:contact@rayriffy.com" dangerouslySetInnerHTML={{__html: subtitle}} />
+      <Subtitle
+        href='mailto:contact@rayriffy.com'
+        dangerouslySetInnerHTML={{ __html: subtitle }}
+      />
     </Container>
   )
 }
