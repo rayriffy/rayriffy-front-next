@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import { filter, intersection, union } from 'lodash'
 import React, { useEffect, useState } from 'react'
 
 import Gamepad, { Button } from 'react-gamepad'
@@ -32,7 +32,7 @@ const Container = styled(Box)<IContainer>`
       ? `transform: rotateY(10deg);`
       : props.direction.includes('ArrowDown')
       ? `transform: rotateX(-10deg);`
-      : _.intersection(props.direction, [
+      : intersection(props.direction, [
           'ArrowLeft',
           'ArrowUp',
           'ArrowRight',
@@ -54,40 +54,40 @@ const Title: React.FC = () => {
 
   const gamepadUpHandler = (e: Button) => {
     if (e === 'DPadUp') {
-      setKey(prev => _.filter(prev, o => o !== 'ArrowUp'))
+      setKey(prev => filter(prev, o => o !== 'ArrowUp'))
     } else if (e === 'DPadDown') {
-      setKey(prev => _.filter(prev, o => o !== 'ArrowDown'))
+      setKey(prev => filter(prev, o => o !== 'ArrowDown'))
     } else if (e === 'DPadLeft') {
-      setKey(prev => _.filter(prev, o => o !== 'ArrowLeft'))
+      setKey(prev => filter(prev, o => o !== 'ArrowLeft'))
     } else if (e === 'DPadRight') {
-      setKey(prev => _.filter(prev, o => o !== 'ArrowRight'))
+      setKey(prev => filter(prev, o => o !== 'ArrowRight'))
     } else {
-      setKey(prev => _.filter(prev, o => o !== e))
+      setKey(prev => filter(prev, o => o !== e))
     }
   }
 
   const gamepadDownHandler = (e: Button) => {
     if (e === 'DPadUp') {
-      setKey(prev => _.union(prev, ['ArrowUp']))
+      setKey(prev => union(prev, ['ArrowUp']))
     } else if (e === 'DPadDown') {
-      setKey(prev => _.union(prev, ['ArrowDown']))
+      setKey(prev => union(prev, ['ArrowDown']))
     } else if (e === 'DPadLeft') {
-      setKey(prev => _.union(prev, ['ArrowLeft']))
+      setKey(prev => union(prev, ['ArrowLeft']))
     } else if (e === 'DPadRight') {
-      setKey(prev => _.union(prev, ['ArrowRight']))
+      setKey(prev => union(prev, ['ArrowRight']))
     } else {
-      setKey(prev => _.union(prev, [e]))
+      setKey(prev => union(prev, [e]))
     }
   }
 
   const keyDownHandler = (e: KeyboardEvent) => {
     // CSS Animation handler
-    setKey(prev => _.union(prev, [e.code]))
+    setKey(prev => union(prev, [e.code]))
   }
 
   const keyUpHandler = (e: KeyboardEvent) => {
     // CSS Animation handler
-    setKey(prev => _.filter(prev, o => o !== e.code))
+    setKey(prev => filter(prev, o => o !== e.code))
   }
 
   useEffect(() => {
