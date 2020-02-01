@@ -9,17 +9,11 @@
   "rules": {
     "interface-name": false,
     "array-type": false,
-    "eqeqeq": [
-      "error",
-      "always"
-    ],
+    "eqeqeq": ["error", "always"],
     "jsx-no-lambda": false,
     "trailing-comma": true,
-    "semicolon": [
-      true,
-      "never"
-    ],
-    "quotemark": false,
+    "semicolon": [true, "never"],
+    "quotemark": [true, "single"],
     "newline-before-return": true,
     "whitespace": true,
     "jsx-boolean-value": false,
@@ -28,7 +22,6 @@
     "ordered-imports": true,
     "no-empty": false,
     "space-before-function-paren": false,
-    "no-shadowed-variable": false,
-    "no-console": false
+    "no-shadowed-variable": false
   }
 }

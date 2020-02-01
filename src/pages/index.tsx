@@ -1,128 +1,36 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
-import { get as lsGet, set as lsSet } from 'local-storage'
-import Gamepad, { Button } from 'react-gamepad'
-import Sound from 'react-sound'
+import { NextPage } from 'next'
 
-import styled from '@emotion/styled'
-import { Card } from 'rebass'
+import { Box, Flex, Heading } from '@chakra-ui/core'
 
-import eventSequence from '../data/sequence/rick'
-
-import App from '../components/app'
-import Navbar from '../components/navbar'
-import Title from '../components/title'
-
-interface ICover {
-  ricked: boolean
-}
-
-const Cover = styled(Card)<ICover>`
-  background-size: cover;
-  background-position: center;
-
-  height: 100%;
-  perspective: 800px;
-  transition: 150ms;
-  ${(props: ICover) =>
-    props.ricked === true
-      ? `background-image: url('/static/rick.jpg');`
-      : `background-image: url('/static/main.jpg');`}
-`
-
-const Page = styled(Card)`
-  height: 100%;
-`
-
-const IndexPage: React.FC = props => {
-  // Init state
-  const [isRicked, setIsRicked] = useState<'PLAYING' | 'STOPPED' | 'PAUSED'>(
-    'STOPPED'
-  )
-
-  const rickHandler = (e: string) => {
-    // Count space and collecting keys
-    lsSet('rickKey', [...lsGet<string[]>('rickKey'), e])
-
-    //
-    // Ricked roll the game
-    //
-
-    /* Ricked everyone */
-    if (
-      eventSequence.every((key, i) => key === lsGet<string[]>('rickKey')[i])
-    ) {
-      setIsRicked('PLAYING')
-    }
-
-    /* Detect wrong sequence */
-    lsGet<string[]>('rickKey').some((key, i) => {
-      if (key !== eventSequence[i]) {
-        lsSet<string[]>('rickKey', [])
-
-        return true
-      } else {
-        return false
-      }
-    })
-  }
-
-  const gamepadUpHandler = (e: Button) => {
-    if (e === 'DPadUp') {
-      rickHandler('ArrowUp')
-    } else if (e === 'DPadDown') {
-      rickHandler('ArrowDown')
-    } else if (e === 'DPadLeft') {
-      rickHandler('ArrowLeft')
-    } else if (e === 'DPadRight') {
-      rickHandler('ArrowRight')
-    } else if (e === 'A' || e === 'B' || e === 'X' || e === 'Y') {
-      rickHandler(`Key${e}`)
-    } else if (e === 'LB' || e === 'LT') {
-      rickHandler('KeyL')
-    } else if (e === 'RB' || e === 'RT') {
-      rickHandler('KeyR')
-    } else if (e === 'Back') {
-      rickHandler('ShiftLeft')
-    } else if (e === 'Start') {
-      rickHandler('ShiftRight')
-    } else if (e !== null) {
-      rickHandler(e)
-    }
-  }
-
-  const keyUpHandler = (e: KeyboardEvent) => {
-    rickHandler(e.code)
-  }
-
-  useEffect(() => {
-    lsSet<string[]>('rickKey', [])
-    window.addEventListener('keyup', keyUpHandler)
-
-    return () => {
-      window.removeEventListener('keyup', keyUpHandler)
-    }
-  }, [])
-
+const IndexPage: NextPage = props => {
   return (
-    <App>
-      <Sound
-        url='/static/rick.mp3'
-        playStatus={isRicked}
-        onFinishedPlaying={() => {
-          setIsRicked('STOPPED')
-        }}
-      />
-      <Gamepad onButtonUp={gamepadUpHandler}>
-        <React.Fragment />
-      </Gamepad>
-      <Cover ricked={isRicked === 'PLAYING'}>
-        <Page color='white' bg='rgba(0,0,0,0.5)'>
-          <Navbar />
-          <Title />
-        </Page>
-      </Cover>
-    </App>
+    <Box height='100%' px={4}>
+      <Flex height='10%' justify='center' align='center'>
+        NAV
+      </Flex>
+      <Flex height='80%' justify='center' align='center'>
+        <Box>
+          <Heading
+            size='md'
+            letterSpacing='0.175em'
+            color='gray.300'
+            textAlign={['left', 'right']}>
+            FULL-STACK DEVELOPER
+          </Heading>
+          <Heading size='xl' color='white' py={2}>
+            Phumrapee Limpianchop
+          </Heading>
+          <Heading size='md' letterSpacing='0.175em' color='gray.300'>
+            リッフィー レー
+          </Heading>
+        </Box>
+      </Flex>
+      <Flex height='10%' justify='center' align='center'>
+        FOOTER
+      </Flex>
+    </Box>
   )
 }
 
