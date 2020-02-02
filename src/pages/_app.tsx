@@ -14,6 +14,7 @@ class NextApp extends App {
       <React.Fragment>
         <Head>
           <title>rayriffy · The front frontier of rayriffy.com</title>
+          <link rel='manifest' href='/manifest.webmanifest' />
         </Head>
         <ThemeProvider>
           <CSSReset />
@@ -25,10 +26,8 @@ class NextApp extends App {
                 height: 100%;
               }
 
-              body {
-                background-image: url(/static/main.jpg);
-                background-size: cover;
-                backdrop-filter: brightness(40%) blur(10px);
+              body: {
+                background: #171923;
               }
             `}
           />

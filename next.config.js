@@ -1,3 +1,8 @@
+const withPlugins = require('next-compose-plugins')
+
+const withOffline = require('next-offline')
+const withOptimizedImages = require('next-optimized-images')
+
 const withPreact = (nextConfig = {}) => {
 	return Object.assign({}, nextConfig, {
 		webpack(config, options) {
@@ -27,4 +32,20 @@ const withPreact = (nextConfig = {}) => {
 	})
 }
 
-module.exports = withPreact()
+module.exports = withPlugins([
+	[withPreact],
+	[withOptimizedImages, {
+		optimizeImagesInDev: true,
+    mozjpeg: {
+      quality: 50,
+    },
+    optipng: {
+      optimizationLevel: 2,
+    },
+    webp: {
+      preset: 'default',
+      quality: 50,
+		},
+	}],
+	[withOffline]
+], {})
