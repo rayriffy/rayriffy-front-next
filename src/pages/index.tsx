@@ -1,102 +1,36 @@
 import React, { useEffect, useState } from 'react'
 
-import { get as lsGet, set as lsSet } from 'local-storage'
-import Gamepad, { Button } from 'react-gamepad'
-import Sound from 'react-sound'
+import { NextPage } from 'next'
 
-import styled from '@emotion/styled'
-import { Card } from 'rebass'
+import Img, { FluidObject } from 'gatsby-image'
+import {
+  FaAddressCard,
+  FaExclamationCircle,
+  FaFacebook,
+  FaGithub,
+  FaNewspaper,
+  FaTwitter,
+} from 'react-icons/fa'
 
-import eventSequence from '../data/sequence/rick'
+import { Box, Flex, Heading, Link, Slide } from '@chakra-ui/core'
 
-import App from '../components/app'
-import Navbar from '../components/navbar'
-import Title from '../components/title'
+import { Nav } from '../core/components/nav'
 
-interface ICover {
-  ricked: boolean
+interface IProps {
+  bg: FluidObject
 }
 
-const Cover = styled(Card)<ICover>`
-  background-size: cover;
-  background-position: center;
-
-  height: 100%;
-  perspective: 800px;
-  transition: 150ms;
-  ${(props: ICover) =>
-    props.ricked === true
-      ? `background-image: url('/static/rick.jpg');`
-      : `background-image: url('/static/main.jpg');`}
-`
-
-const Page = styled(Card)`
-  height: 100%;
-`
-
-const IndexPage: React.FC = props => {
-  // Init state
-  const [isRicked, setIsRicked] = useState<'PLAYING' | 'STOPPED' | 'PAUSED'>(
-    'STOPPED'
-  )
-
-  const rickHandler = (e: string) => {
-    // Count space and collecting keys
-    lsSet('rickKey', [...lsGet<string[]>('rickKey'), e])
-
-    //
-    // Ricked roll the game
-    //
-
-    /* Ricked everyone */
-    if (
-      eventSequence.every((key, i) => key === lsGet<string[]>('rickKey')[i])
-    ) {
-      setIsRicked('PLAYING')
-    }
-
-    /* Detect wrong sequence */
-    lsGet<string[]>('rickKey').some((key, i) => {
-      if (key !== eventSequence[i]) {
-        lsSet<string[]>('rickKey', [])
-
-        return true
-      } else {
-        return false
-      }
-    })
-  }
-
-  const gamepadUpHandler = (e: Button) => {
-    if (e === 'DPadUp') {
-      rickHandler('ArrowUp')
-    } else if (e === 'DPadDown') {
-      rickHandler('ArrowDown')
-    } else if (e === 'DPadLeft') {
-      rickHandler('ArrowLeft')
-    } else if (e === 'DPadRight') {
-      rickHandler('ArrowRight')
-    } else if (e === 'A' || e === 'B' || e === 'X' || e === 'Y') {
-      rickHandler(`Key${e}`)
-    } else if (e === 'LB' || e === 'LT') {
-      rickHandler('KeyL')
-    } else if (e === 'RB' || e === 'RT') {
-      rickHandler('KeyR')
-    } else if (e === 'Back') {
-      rickHandler('ShiftLeft')
-    } else if (e === 'Start') {
-      rickHandler('ShiftRight')
-    } else if (e !== null) {
-      rickHandler(e)
-    }
-  }
-
-  const keyUpHandler = (e: KeyboardEvent) => {
-    rickHandler(e.code)
-  }
+const IndexPage: NextPage<IProps> = props => {
+  const [showMenu, setShowMenu] = useState<boolean>(false)
+  const [showHead, setShowHead] = useState<boolean>(false)
+  const [showH, setShowH] = useState<boolean>(false)
 
   useEffect(() => {
-    lsSet<string[]>('rickKey', [])
+    setShowHead(true)
+    setTimeout(() => {
+      setShowMenu(true)
+    }, 1000)
+
     window.addEventListener('keyup', keyUpHandler)
 
     return () => {
@@ -104,26 +38,149 @@ const IndexPage: React.FC = props => {
     }
   }, [])
 
+  let hCount = 0
+
+  const keyUpHandler = (e: KeyboardEvent) => {
+    if (e.keyCode === 32) {
+      hCount++
+    }
+
+    if (hCount % 10 === 0 && hCount !== 0) {
+      hCount = 0
+      setShowH(prev => !prev)
+    }
+  }
+
+  const leftNav = [
+    {
+      name: 'blog',
+      href: 'https://blog.rayriffy.com',
+      icon: FaNewspaper,
+    },
+    {
+      name: 'cv',
+      href: 'https://cv.rayriffy.com',
+      icon: FaAddressCard,
+    },
+  ]
+
+  const rightNav = [
+    {
+      name: 'github',
+      href: 'https://github.com/rayriffy',
+      icon: FaGithub,
+    },
+    {
+      name: 'facebook',
+      href: 'https://facebook.com/rayriffy',
+      icon: FaFacebook,
+    },
+    {
+      name: 'twitter',
+      href: 'https://twitter.com/rayriffy',
+      icon: FaTwitter,
+    },
+  ]
+
   return (
-    <App>
-      <Sound
-        url='/static/rick.mp3'
-        playStatus={isRicked}
-        onFinishedPlaying={() => {
-          setIsRicked('STOPPED')
-        }}
-      />
-      <Gamepad onButtonUp={gamepadUpHandler}>
-        <React.Fragment />
-      </Gamepad>
-      <Cover ricked={isRicked === 'PLAYING'}>
-        <Page color='white' bg='rgba(0,0,0,0.5)'>
-          <Navbar />
-          <Title />
-        </Page>
-      </Cover>
-    </App>
+    <React.Fragment>
+      <Box
+        zIndex={-1}
+        width='100%'
+        height='100%'
+        position='absolute'
+        overflow='hidden'
+        objectFit='cover'>
+        <Img
+          fluid={props.bg}
+          style={{
+            height: '100%',
+            filter: 'brightness(40%) blur(10px)',
+            transform: 'scale(1.1)',
+          }}
+        />
+      </Box>
+      <Flex
+        height='100%'
+        justify='center'
+        align='center'
+        wrap={['wrap', 'wrap', 'initial']}>
+        <Nav transition={showMenu} from='left' items={leftNav}>
+          <Slide in={showH} from='left' items={[true]} duration={600}>
+            {(styles: any) => {
+              const component = (
+                <Box
+                  px={[4, 4, 2]}
+                  py={[2, 2, 4]}
+                  transform={styles.transform}
+                  opacity={styles.opacity}>
+                  <Link href='https://h.rayriffy.com' isExternal>
+                    <Box as={FaExclamationCircle} size='32px' color='white' />
+                  </Link>
+                </Box>
+              ) as any
+
+              return component
+            }}
+          </Slide>
+        </Nav>
+        <Slide in={showHead} items={[true]} duration={1000} from='bottom'>
+          {(styles: any) => {
+            const component = (
+              <Box px={6} opacity={styles.opacity} transform={styles.transform}>
+                <Heading
+                  size='md'
+                  letterSpacing='0.175em'
+                  color='gray.300'
+                  textAlign={['left', 'right']}>
+                  FULL-STACK DEVELOPER
+                </Heading>
+                <Heading size='xl' color='white' py={2}>
+                  Phumrapee Limpianchop
+                </Heading>
+                <Heading size='md' letterSpacing='0.175em' color='gray.300'>
+                  リッフィー レー
+                </Heading>
+              </Box>
+            ) as any
+
+            return component
+          }}
+        </Slide>
+        <Nav transition={showMenu} from='right' items={rightNav} />
+      </Flex>
+    </React.Fragment>
   )
+}
+
+IndexPage.getInitialProps = async () => {
+  const generateFluid = (
+    src: string,
+    sizes: string = '(max-width: 500px) 100vw, 500px'
+  ) => {
+    const resizedOriginal = require(`../../assets/${src}?resize&size=550`)
+    const images = require(`../../assets/${src}?resize&sizes[]=200&sizes[]=350&sizes[]=500`)
+    const webP = require(`../../assets/${src}?webp`)
+    const trace = require(`../../assets/${src}?trace`).trace
+    const tiny = require(`../../assets/${src}?lqip`)
+
+    const res: FluidObject = {
+      base64: tiny,
+      src: resizedOriginal.src,
+      srcSet: images.srcSet,
+      srcWebp: webP,
+      srcSetWebp: webP,
+      tracedSVG: trace,
+      aspectRatio: images.width / images.height,
+      sizes,
+    }
+
+    return res
+  }
+
+  return {
+    bg: generateFluid('main.jpg'),
+  }
 }
 
 export default IndexPage

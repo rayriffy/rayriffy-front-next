@@ -1,0 +1,10 @@
+{
+  "name": "rayriffy.com",
+  "short_name": "rayriffy.com",
+  "theme_color": "#2d3748",
+  "background_color": "#171923",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/"
+}

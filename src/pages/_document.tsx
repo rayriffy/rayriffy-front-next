@@ -12,28 +12,7 @@ class NextDocument extends Document {
   public render() {
     return (
       <Html lang='en'>
-        <Head>
-          <link
-            rel='stylesheet'
-            href='https://fonts.googleapis.com/css?family=Roboto:300,400&font-display=swap'
-          />
-          <link rel='shortcut icon' href='/static/favicon.png' />
-          <link rel='apple-touch-icon-precomposed' href='/static/favicon.png' />
-          <link rel='preconnect' href='https://blog.rayriffy.com' />
-          <link rel='preconnect' href='https://h.rayriffy.com' />
-          <link rel='preconnect' href='https://cv.rayriffy.com' />
-          <link rel='preconnect' href='https://github.com' />
-          <link rel='preconnect' href='https://twitter.com' />
-          <link rel='preconnect' href='https://instagram.com' />
-          <link rel='preconnect' href='https://fonts.googleapis.com' />
-          <link rel='dns-prefetch' href='https://blog.rayriffy.com' />
-          <link rel='dns-prefetch' href='https://h.rayriffy.com' />
-          <link rel='dns-prefetch' href='https://cv.rayriffy.com' />
-          <link rel='dns-prefetch' href='https://github.com' />
-          <link rel='dns-prefetch' href='https://twitter.com' />
-          <link rel='dns-prefetch' href='https://instagram.com' />
-          <link rel='dns-prefetch' href='https://fonts.googleapis.com' />
-        </Head>
+        <Head />
         <body>
           <Main />
           <NextScript />
