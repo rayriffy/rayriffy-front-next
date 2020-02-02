@@ -15,6 +15,8 @@ class NextApp extends App {
         <Head>
           <title>rayriffy · The front frontier of rayriffy.com</title>
           <link rel='manifest' href='/manifest.webmanifest' />
+          <link rel='shortcut icon' href='/favicon.png' />
+          <link rel='apple-touch-icon-precomposed' href='/favicon.png' />
         </Head>
         <ThemeProvider>
           <CSSReset />

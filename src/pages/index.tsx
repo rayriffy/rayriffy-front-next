@@ -40,18 +40,18 @@ const IndexPage: NextPage<IProps> = props => {
         height='100%'
         justify='center'
         align='center'
-        wrap={['wrap', 'initial']}>
+        wrap={['wrap', 'wrap', 'initial']}>
         <Flex
-          width={['100%', 'auto']}
-          direction={['row', 'column']}
+          width={['100%', '100%', 'auto']}
+          direction={['row', 'row', 'column']}
           justify='center'
           px={12}>
-          <Box px={[4, 2]} py={[2, 4]}>
+          <Box px={[4, 4, 2]} py={[2, 2, 4]}>
             <Link href='https://blog.rayriffy.com'>
               <Box as={FaNewspaper} size='32px' color='white' />
             </Link>
           </Box>
-          <Box px={[4, 2]} py={[2, 4]}>
+          <Box px={[4, 4, 2]} py={[2, 2, 4]}>
             <Link href='https://cv.rayriffy.com'>
               <Box as={FaAddressCard} size='32px' color='white' />
             </Link>
@@ -65,7 +65,7 @@ const IndexPage: NextPage<IProps> = props => {
             textAlign={['left', 'right']}>
             FULL-STACK DEVELOPER
           </Heading>
-          <Heading size='2xl' color='white' py={2}>
+          <Heading size='xl' color='white' py={2}>
             Phumrapee Limpianchop
           </Heading>
           <Heading size='md' letterSpacing='0.175em' color='gray.300'>
@@ -73,21 +73,21 @@ const IndexPage: NextPage<IProps> = props => {
           </Heading>
         </Box>
         <Flex
-          width={['100%', 'auto']}
-          direction={['row', 'column']}
+          width={['100%', '100%', 'auto']}
+          direction={['row', 'row', 'column']}
           justify='center'
           px={12}>
-          <Box px={[4, 2]} py={[2, 4]}>
+          <Box px={[4, 4, 2]} py={[2, 2, 4]}>
             <Link href='https://github.com/rayriffy'>
               <Box as={FaGithub} size='32px' color='white' />
             </Link>
           </Box>
-          <Box px={[4, 2]} py={[2, 4]}>
+          <Box px={[4, 4, 2]} py={[2, 2, 4]}>
             <Link href='https://facebook.com/rayriffy'>
               <Box as={FaFacebook} size='32px' color='white' />
             </Link>
           </Box>
-          <Box px={[4, 2]} py={[2, 4]}>
+          <Box px={[4, 4, 2]} py={[2, 2, 4]}>
             <Link href='https://twitter.com/rayriffy'>
               <Box as={FaTwitter} size='32px' color='white' />
             </Link>
