@@ -27,10 +27,6 @@ class NextApp extends App {
               #__next {
                 height: 100%;
               }
-
-              body: {
-                background: #171923;
-              }
             `}
           />
           <Component {...pageProps} />

@@ -1,23 +1,87 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+
+import { NextPage } from 'next'
 
 import Img, { FluidObject } from 'gatsby-image'
 import {
   FaAddressCard,
+  FaExclamationCircle,
   FaFacebook,
   FaGithub,
   FaNewspaper,
   FaTwitter,
 } from 'react-icons/fa'
 
-import { NextPage } from 'next'
+import { Box, Flex, Heading, Link, Slide } from '@chakra-ui/core'
 
-import { Box, Flex, Heading, Link } from '@chakra-ui/core'
+import { Nav } from '../core/components/nav'
 
 interface IProps {
   bg: FluidObject
 }
 
 const IndexPage: NextPage<IProps> = props => {
+  const [showMenu, setShowMenu] = useState<boolean>(false)
+  const [showHead, setShowHead] = useState<boolean>(false)
+  const [showH, setShowH] = useState<boolean>(false)
+
+  useEffect(() => {
+    setShowHead(true)
+    setTimeout(() => {
+      setShowMenu(true)
+    }, 1000)
+
+    window.addEventListener('keyup', keyUpHandler)
+
+    return () => {
+      window.removeEventListener('keyup', keyUpHandler)
+    }
+  }, [])
+
+  let hCount = 0
+
+  const keyUpHandler = (e: KeyboardEvent) => {
+    if (e.keyCode === 32) {
+      hCount++
+    }
+
+    if (hCount % 10 === 0 && hCount !== 0) {
+      hCount = 0
+      setShowH(prev => !prev)
+    }
+  }
+
+  const leftNav = [
+    {
+      name: 'blog',
+      href: 'https://blog.rayriffy.com',
+      icon: FaNewspaper,
+    },
+    {
+      name: 'cv',
+      href: 'https://cv.rayriffy.com',
+      icon: FaAddressCard,
+    },
+  ]
+
+  const rightNav = [
+    {
+      name: 'github',
+      href: 'https://github.com/rayriffy',
+      icon: FaGithub,
+    },
+    {
+      name: 'facebook',
+      href: 'https://facebook.com/rayriffy',
+      icon: FaFacebook,
+    },
+    {
+      name: 'twitter',
+      href: 'https://twitter.com/rayriffy',
+      icon: FaTwitter,
+    },
+  ]
+
   return (
     <React.Fragment>
       <Box
@@ -41,58 +105,49 @@ const IndexPage: NextPage<IProps> = props => {
         justify='center'
         align='center'
         wrap={['wrap', 'wrap', 'initial']}>
-        <Flex
-          width={['100%', '100%', 'auto']}
-          direction={['row', 'row', 'column']}
-          justify='center'
-          px={12}>
-          <Box px={[4, 4, 2]} py={[2, 2, 4]}>
-            <Link href='https://blog.rayriffy.com'>
-              <Box as={FaNewspaper} size='32px' color='white' />
-            </Link>
-          </Box>
-          <Box px={[4, 4, 2]} py={[2, 2, 4]}>
-            <Link href='https://cv.rayriffy.com'>
-              <Box as={FaAddressCard} size='32px' color='white' />
-            </Link>
-          </Box>
-        </Flex>
-        <Box px={6}>
-          <Heading
-            size='md'
-            letterSpacing='0.175em'
-            color='gray.300'
-            textAlign={['left', 'right']}>
-            FULL-STACK DEVELOPER
-          </Heading>
-          <Heading size='xl' color='white' py={2}>
-            Phumrapee Limpianchop
-          </Heading>
-          <Heading size='md' letterSpacing='0.175em' color='gray.300'>
-            リッフィー レー
-          </Heading>
-        </Box>
-        <Flex
-          width={['100%', '100%', 'auto']}
-          direction={['row', 'row', 'column']}
-          justify='center'
-          px={12}>
-          <Box px={[4, 4, 2]} py={[2, 2, 4]}>
-            <Link href='https://github.com/rayriffy'>
-              <Box as={FaGithub} size='32px' color='white' />
-            </Link>
-          </Box>
-          <Box px={[4, 4, 2]} py={[2, 2, 4]}>
-            <Link href='https://facebook.com/rayriffy'>
-              <Box as={FaFacebook} size='32px' color='white' />
-            </Link>
-          </Box>
-          <Box px={[4, 4, 2]} py={[2, 2, 4]}>
-            <Link href='https://twitter.com/rayriffy'>
-              <Box as={FaTwitter} size='32px' color='white' />
-            </Link>
-          </Box>
-        </Flex>
+        <Nav transition={showMenu} from='left' items={leftNav}>
+          <Slide in={showH} from='left' items={[true]} duration={600}>
+            {(styles: any) => {
+              const component = (
+                <Box
+                  px={[4, 4, 2]}
+                  py={[2, 2, 4]}
+                  transform={styles.transform}
+                  opacity={styles.opacity}>
+                  <Link href='https://h.rayriffy.com' isExternal>
+                    <Box as={FaExclamationCircle} size='32px' color='white' />
+                  </Link>
+                </Box>
+              ) as any
+
+              return component
+            }}
+          </Slide>
+        </Nav>
+        <Slide in={showHead} items={[true]} duration={1000} from='bottom'>
+          {(styles: any) => {
+            const component = (
+              <Box px={6} opacity={styles.opacity} transform={styles.transform}>
+                <Heading
+                  size='md'
+                  letterSpacing='0.175em'
+                  color='gray.300'
+                  textAlign={['left', 'right']}>
+                  FULL-STACK DEVELOPER
+                </Heading>
+                <Heading size='xl' color='white' py={2}>
+                  Phumrapee Limpianchop
+                </Heading>
+                <Heading size='md' letterSpacing='0.175em' color='gray.300'>
+                  リッフィー レー
+                </Heading>
+              </Box>
+            ) as any
+
+            return component
+          }}
+        </Slide>
+        <Nav transition={showMenu} from='right' items={rightNav} />
       </Flex>
     </React.Fragment>
   )
