@@ -14,9 +14,10 @@ class NextApp extends App {
       <React.Fragment>
         <Head>
           <title>rayriffy · The front frontier of rayriffy.com</title>
+          <meta name='theme-color' content='#2d3748' />
           <link rel='manifest' href='/manifest.webmanifest' />
           <link rel='shortcut icon' href='/favicon.png' />
-          <link rel='apple-touch-icon-precomposed' href='/favicon.png' />
+          <link rel='apple-touch-icon' href='/favicon.png' />
         </Head>
         <ThemeProvider>
           <CSSReset />
