@@ -101,6 +101,7 @@ const IndexPage: NextPage<IProps> = props => {
         />
       </Box>
       <Flex
+        overflow='hidden'
         height='100%'
         justify='center'
         align='center'
