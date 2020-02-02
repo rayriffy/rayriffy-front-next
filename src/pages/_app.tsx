@@ -11,7 +11,7 @@ class NextApp extends App {
     const { Component, pageProps } = this.props
 
     return (
-      <React.Fragment>
+      <React.StrictMode>
         <Head>
           <title>rayriffy · The front frontier of rayriffy.com</title>
           <meta name='theme-color' content='#2d3748' />
@@ -32,7 +32,7 @@ class NextApp extends App {
           />
           <Component {...pageProps} />
         </ThemeProvider>
-      </React.Fragment>
+      </React.StrictMode>
     )
   }
 }
