@@ -24,7 +24,7 @@ export const Nav: React.FC<INav> = props => {
                   px={[4, 4, 2]}
                   py={[2, 2, 4]}
                   key={`nav-item-${item.name}-${i}`}>
-                  <Link href={item.href} isExternal>
+                  <Link href={item.href} aria-label={item.name} isExternal>
                     <Box as={item.icon} size='32px' color='white' />
                   </Link>
                 </Box>

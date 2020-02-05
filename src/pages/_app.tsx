@@ -15,6 +15,10 @@ class NextApp extends App {
         <Head>
           <title>rayriffy · The front frontier of rayriffy.com</title>
           <meta name='theme-color' content='#2d3748' />
+          <meta
+            name='description'
+            content='I am half full-stack web developer...half arcade player'
+          />
           <link rel='manifest' href='/manifest.webmanifest' />
           <link rel='shortcut icon' href='/favicon.png' />
           <link rel='apple-touch-icon' href='/favicon.png' />
