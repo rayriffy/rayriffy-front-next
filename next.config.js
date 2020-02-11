@@ -4,38 +4,38 @@ const withOffline = require('next-offline')
 const withOptimizedImages = require('next-optimized-images')
 
 const withPreact = (nextConfig = {}) => {
-	return Object.assign({}, nextConfig, {
-		webpack(config, options) {
-			if (!options.defaultLoaders) {
-				throw new Error(
-					"This plugin is not compatible with Next.js versions below 5.0.0 https://err.sh/next-plugins/upgrade"
-				)
-			}
+  return Object.assign({}, nextConfig, {
+    webpack(config, options) {
+      if (!options.defaultLoaders) {
+        throw new Error(
+          "This plugin is not compatible with Next.js versions below 5.0.0 https://err.sh/next-plugins/upgrade"
+        )
+      }
 
-			if (options.isServer) {
-				config.externals = ["react", "react-dom", ...config.externals]
-			}
+      if (options.isServer) {
+        config.externals = ["react", "react-dom", ...config.externals]
+      }
 
-			config.resolve.alias = Object.assign({}, config.resolve.alias, {
-				react: "preact/compat",
-				react$: "preact/compat",
-				"react-dom": "preact/compat",
-				"react-dom$": "preact/compat"
-			})
+      config.resolve.alias = Object.assign({}, config.resolve.alias, {
+        react: "preact/compat",
+        react$: "preact/compat",
+        "react-dom": "preact/compat",
+        "react-dom$": "preact/compat"
+      })
 
-			if (typeof nextConfig.webpack === "function") {
-				return nextConfig.webpack(config, options)
-			}
+      if (typeof nextConfig.webpack === "function") {
+        return nextConfig.webpack(config, options)
+      }
 
-			return config
-		}
-	})
+      return config
+    }
+  })
 }
 
 module.exports = withPlugins([
-	[withPreact],
-	[withOptimizedImages, {
-		optimizeImagesInDev: true,
+  [withPreact],
+  [withOptimizedImages, {
+    optimizeImagesInDev: true,
     mozjpeg: {
       quality: 50,
     },
@@ -45,7 +45,7 @@ module.exports = withPlugins([
     webp: {
       preset: 'default',
       quality: 50,
-		},
-	}],
-	[withOffline]
+    },
+  }],
+  [withOffline]
 ], {})
