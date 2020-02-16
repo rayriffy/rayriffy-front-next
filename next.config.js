@@ -2,7 +2,7 @@ const withPlugins = require('next-compose-plugins')
 
 const withOffline = require('next-offline')
 const withOptimizedImages = require('next-optimized-images')
-const withBundleAnalyzer = require('@zeit/next-bundle-analyzer')
+const withBundleAnalyzer = require('@next/bundle-analyzer')
 
 const withPreact = (nextConfig = {}) => {
   return Object.assign({}, nextConfig, {
@@ -52,25 +52,7 @@ module.exports = withPlugins(
         },
       },
     ],
-    [
-      withBundleAnalyzer,
-      {
-        analyzeServer: ['server', 'both'].includes(process.env.BUNDLE_ANALYZE),
-        analyzeBrowser: ['browser', 'both'].includes(
-          process.env.BUNDLE_ANALYZE
-        ),
-        bundleAnalyzerConfig: {
-          server: {
-            analyzerMode: 'static',
-            reportFilename: '../../bundles/server.html',
-          },
-          browser: {
-            analyzerMode: 'static',
-            reportFilename: '../bundles/client.html',
-          },
-        },
-      },
-    ],
+    [withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' })],
     [withOffline],
   ],
   {}
