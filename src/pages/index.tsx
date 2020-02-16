@@ -21,9 +21,9 @@ interface IProps {
 }
 
 const IndexPage: NextPage<IProps> = props => {
-  const [showMenu, setShowMenu] = useState<boolean>(false)
-  const [showHead, setShowHead] = useState<boolean>(false)
-  const [showH, setShowH] = useState<boolean>(false)
+  const { 0: showMenu, 1: setShowMenu } = useState<boolean>(false)
+  const { 0: showHead, 1: setShowHead } = useState<boolean>(false)
+  const { 0: showH, 1: setShowH } = useState<boolean>(false)
 
   useEffect(() => {
     setShowHead(true)
@@ -95,7 +95,7 @@ const IndexPage: NextPage<IProps> = props => {
           fluid={props.bg}
           style={{
             height: '100%',
-            filter: 'brightness(40%) blur(10px)',
+            filter: 'brightness(30%) blur(10px)',
             transform: 'scale(1.1)',
           }}
         />
@@ -159,7 +159,7 @@ IndexPage.getInitialProps = async () => {
     src: string,
     sizes: string = '(max-width: 500px) 100vw, 500px'
   ) => {
-    const resizedOriginal = require(`../../assets/${src}?resize&size=550`)
+    const resizedOriginal = require(`../../assets/${src}?resize&size=500`)
     const images = require(`../../assets/${src}?resize&sizes[]=200&sizes[]=350&sizes[]=500`)
     const webP = require(`../../assets/${src}?webp`)
     const trace = require(`../../assets/${src}?trace`).trace

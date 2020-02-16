@@ -6,6 +6,11 @@
   "author": "Phumrapee Limpianchop <contact@rayriffy.com>",
   "license": "MIT",
   "private": true,
+  "browserslist": [
+    "last 2 versions",
+    "> 0.25%",
+    "not dead"
+  ],
   "scripts": {
     "build": "next build",
     "deploy": "netlify deploy --dir=./out --prod",
@@ -20,6 +25,7 @@
     "@chakra-ui/core": "^0.5.2",
     "@emotion/core": "^10.0.27",
     "@emotion/styled": "^10.0.27",
+    "@zeit/next-bundle-analyzer": "^0.1.2",
     "babel-plugin-emotion": "^10.0.27",
     "emotion-theming": "^10.0.27",
     "gatsby-image": "^2.2.40",
